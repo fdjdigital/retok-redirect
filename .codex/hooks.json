@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "R=$(git rev-parse --show-toplevel 2>/dev/null); [ -n \"$R\" ] && [ -f \"$R/.claude/scripts/auto-sync.sh\" ] && bash \"$R/.claude/scripts/auto-sync.sh\" pull 2>/dev/null; true",
+            "timeout": 120
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "R=$(git rev-parse --show-toplevel 2>/dev/null); [ -n \"$R\" ] && [ -f \"$R/.claude/scripts/auto-sync.sh\" ] && bash \"$R/.claude/scripts/auto-sync.sh\" push 2>/dev/null; true",
+            "timeout": 180
+          }
+        ]
+      }
+    ]
+  }
+}
